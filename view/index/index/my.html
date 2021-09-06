@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>我的</title>
+		<link rel="stylesheet" type="text/css" href="/static/css/bar.css"/>
+		<script src="/static/js/jquery.js"></script>
+		<style>
+	
+			* {
+				margin: 0;
+				padding: 0;	
+			}
+
+			.all {
+				position:relative;
+				padding: 0 0.625rem;
+			}
+            .topdiv{
+				padding: 0 0.625rem;
+				background-image: linear-gradient(#b4ffde, #ffffff);	
+			}
+			.top {
+				height: 4.875rem;
+				width: 100%;
+				display: flex;
+				align-items: center;
+			}
+
+			.top .top_img {
+				width: 3.625rem;
+				height: 3.625rem;
+				border-radius: 50%;
+			}
+
+			.top .info {
+				margin-left: 1.25rem;
+			}
+
+			.top .info .top_text {
+				font-size: 0.625rem;
+				color: #f2a149;
+			}
+			.interests{
+				height: 8.25rem;
+				//width: 100%;
+				border: 1px solid #e2ede9;
+				border-radius: 0.625rem;
+				margin-top: 1.25rem;
+				margin-left:10px ;
+				margin-right: 10px;
+				padding-bottom: 0.625rem;
+				box-shadow:1px 1px 1px 1px #CCCCCC;
+			}
+			.interests .p{
+				border-bottom:1px solid #cccccc;
+				padding-left:0.625rem;
+				height: 2.5rem;
+				line-height: 2.5rem;
+				font-size: 0.8rem;
+			}
+			.list{
+				text-align: center;
+				width: 25%;
+			}
+			.list_img{
+				width: 30px;
+				height: 30px;
+			}
+			.list_text{
+				margin-top: 0.9375rem;
+				font-size: 13px;
+				color: #464742;
+			}
+			.interestslist{
+				display: flex;
+				align-items:center;
+				padding: 0.9375rem 0;
+			}
+            .card{
+				width: 50%;
+				margin: 0.8rem 0.5rem 0.8rem 0.5rem;
+				padding: 1.5rem 1rem 1.5rem 1rem;
+				text-align: center;
+				color: #FFFFFF;
+				border-radius: 0.5rem;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+		    <div class="topdiv">
+				<div class="top">
+					<img src="/static/img/user.png" class="top_img">
+					<div class="info">
+						<p class="mobile">****</p>
+						<p class="top_text">普通用户</p>
+					</div>
+				</div>
+			</div>
+			<div class="top-right">
+				<img src="/static/img/sz.png" class="img3" id="shezhi">
+			</div>
+			<div style="display: flex">
+				<div class="card" style="background-image: linear-gradient(to right,#42CA7A, #4FFBC5);">
+                    <div>我的买单</div>
+					<p id="buyorder">0</p>
+				</div>
+				<div class="card" style="background-image: linear-gradient(to right,#DF956A, #FAA711);">
+					<div>我的卖单</div>
+					<p id="sellorder">0</p>
+				</div>
+			</div>
+<!--			<div class="interests">-->
+<!--				<div class="p">我的权益</div>-->
+<!--				<div class="interestslist">-->
+<!--					<div class="list" id="rljl">-->
+<!--						<img src="/static/img/rljl.png" class="list_img">-->
+<!--						<p class="list_text">认领记录</p>-->
+<!--					</div>-->
+<!--					<div class="list" id="rldd">-->
+<!--						<img src="/static/img/rldd.png" class="list_img">-->
+<!--						<p class="list_text">认领订单</p>-->
+<!--					</div>-->
+<!--					<div class="list" id="zsdd">-->
+<!--						<img src="/static/img/zsdd.png" class="list_img">-->
+<!--						<p class="list_text">钻石订单</p>-->
+<!--					</div>-->
+<!--					<div class="list" id="ssgl">-->
+<!--						<img src="/static/img/ssgl.png" class="list_img">-->
+<!--						<p class="list_text">申诉管理</p>-->
+<!--					</div>-->
+<!--					<div class="list" id="wdkj">-->
+<!--						<img src="/static/img/wdkj.png" class="list_img">-->
+<!--						<p class="list_text">我的矿机</p>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>		-->
+		
+		<div class="all">
+			<div class="service">
+				<div class="servicetext">我的服务</div>
+				<div class="servicelist" id="authentication">
+					<div class="servicelist_left" >
+						<img src="/static/img/smrz.png" class="img1">
+						<p class="servicelist_text">实名认证</p>
+					</div>
+					<img src="/static/img/jr.png" class="img2">
+				</div>
+				<div class="servicelist" id="payment">
+					<div class="servicelist_left">
+						<img src="/static/img/zfgl.png" class="img1">
+						<p class="servicelist_text">支付管理</p>
+					</div>
+					<img src="/static/img/jr.png" class="img2">
+				</div>
+				<div class="servicelist">
+					<div class="servicelist_left">
+						<img src="/static/img/wdfx.png" class="img1">
+						<p class="servicelist_text">我的团队</p>
+					</div>
+					<img src="/static/img/jr.png" class="img2">
+				</div>
+				<div class="servicelist">
+					<div class="servicelist_left">
+						<img src="/static/img/yqwm.png" class="img1">
+						<p class="servicelist_text">邀请好友</p>
+					</div>
+					<img src="/static/img/jr.png" class="img2">
+				</div>
+				<div class="servicelist">
+					<div class="servicelist_left">
+						<img src="/static/img/lxwm.png" class="img1">
+						<p class="servicelist_text">联系客服</p>
+					</div>
+					<img src="/static/img/jr.png" class="img2">
+				</div>
+				<div class="servicelist">
+					<div class="servicelist_left">
+						<img src="/static/img/bzzx.png" class="img1">
+						<p class="servicelist_text">帮助中心</p>
+					</div>
+					<img src="/static/img/jr.png" class="img2">
+				</div>
+			</div>
+		</div>
+		<!-- <div style="width: 100%;height: 900px;background-color: #41C673;"></div> -->
+			<div class="bar">
+				<div class="barlist">
+					<a href="./index.html">
+						<img src="/static/img/shouye.png" >
+					</a>
+					<div class="">
+						首页
+					</div>
+				</div>
+				<div class="barlist">
+					<a href="./announcement.html">
+						<img src="/static/img/announcement.png" >
+					</a>
+					<div class="">
+						消息
+					</div>
+				</div>
+				<div class="barlist">
+					<a href="./assets.html">
+						<img src="/static/img/assets.png" >
+					</a>
+					<div class="">
+						资产
+					</div>
+				</div>
+				<div class="barlist">
+					<a href="./my.html">
+						<img src="/static/img/wode.png" >
+					</a>
+					<div class="">
+						我的
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			$('#shezhi').click(function(){
+				$(location).attr('href','/set.html')
+			})
+			$('#rljl').click(function(){
+				alert("认领记录")
+			})
+			$('#rldd').click(function(){
+				alert("认领订单")
+			})
+			$('#zsdd').click(function(){
+				$(location).attr('href','/jewelorder.html')
+			})
+			$('#ssgl').click(function(){
+				alert("申诉管理")
+			})
+			$('#wdkj').click(function(){
+				alert("我的矿机")
+			})
+			$('#authentication').click(function (){
+				$(location).attr('href','/authentication.html')
+			})
+			$('#payment').click(function (){
+				$(location).attr('href','/payment.html')
+			})
+		</script>
+		<script>
+			$(function() {
+				$.post('/api/userinfo',{}).then(function(res){
+					$('.mobile').text(res.data.mobile)
+				})
+			});
+		</script>
+	</body>
+</html>

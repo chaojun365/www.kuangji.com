@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>矿机项目</title>
+		<link rel="stylesheet" type="text/css" href="/static/css/all.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/css/dialog.css"/>
+		<script src="/static/js/jquery.js"></script>
+		<script src="/static/js/mDialogMin.js"></script>
+<!--		<link rel="stylesheet" type="text/css" href="/static/css/swiper.css"/>-->
+<!--		<script src="/static/js/swiper.min.js"></script>-->
+	</head>
+	<body>
+		<div>
+			<div class="topcard">
+				<div class="head">
+					<img class="headimg" src="/static/img/user.png" >
+				</div>
+				<div class="card01">
+					<span class="jewel01">账户金豆</span>
+					<span class="jewel02" id="jihuo">未激活账号</span> 
+				</div>
+				<div class="balance">0.00</div>
+				<div class="card02">
+					<span class="jewel03" id="buyzs" style="border-right:2px solid #FFFFFF ;"><img class="ico"  src="/static/img/buyzs.png">购买金豆</span>
+					<span class="jewel03" id="zs"><img class="ico"  src="/static/img/zs.png">我要送礼</span>
+				</div>			
+			</div>
+			<div class="middlecard" id="cz">
+				<img src="/static/img/banner.png" >
+			</div>
+			<div class="receive">
+				<span>竞购区</span>
+<!--			<span class="allreceive">全部预约</span>-->
+			</div>
+		</div>
+		<div class="swiper-container" style="">
+		  <div class="swiper-wrapper" id="list">
+
+
+		  </div>
+		</div>
+		<div class="receive">
+			<span style="margin-button:100px">兑换区</span>
+			<!--				<span class="allreceive">全部预约</span>-->
+		</div>
+		<div class="swiper-container" style="">
+			<div class="swiper-wrapper" id="list" style="text-align: center">
+
+            <img class="chanpin" src="/static/img/liantong.png" id="exchange">
+
+		</div>
+		<div style="height: 50px;">
+
+		</div>
+		<div class="bar">
+			<div class="barlist">
+				<a href="./index.html">
+				    <img src="/static/img/shouye.png" >
+				</a>
+				<div class="">
+					首页
+				</div>
+			</div>
+			<div class="barlist">
+				<a href="./announcement.html">
+					<img src="/static/img/announcement.png" >
+				</a>
+				<div class="">
+                     消息
+				</div>
+			</div>
+			<div class="barlist">
+				<a href="./assets.html">
+				    <img src="/static/img/assets.png" >
+				</a>
+				<div class="">
+					资产
+				</div>
+			</div>
+			<div class="barlist">
+				<a href="./my.html">
+				    <img src="/static/img/wode.png" >
+				</a>
+				<div class="">
+					我的
+				</div>
+			</div>
+		</div>
+		<script>
+		    // var mySwiper = new Swiper('.swiper-container', {
+			// 	autoplay: true,//可选选项，自动滑动
+			// 	speed:500,
+			// 	delay: 1000,//1秒切换一次
+			// 	loop : true,
+		    // })
+			// var mySwiper = new Swiper('.swiper-container', {
+			// 	autoplay: true,//可选选项，自动滑动
+			// 	speed:100,
+			// 	delay: 1000,//1秒切换一次
+			// 	loop : true,
+			// 	// effect : 'cube',
+			// 	// cubeEffect: {
+			// 	//    slideShadows: true,
+			// 	//    shadow: true,
+			// 	//    shadowOffset: 100,
+			// 	//    shadowScale: 0.6
+			// 	// },
+			// })
+			// $('#jihuo').click(function(){
+			// 	Dialog.init('激活账号需要10颗钻石，确定要激活吗？',{
+			// 		title : '激活账号',
+			// 		button : {
+			// 			取消 : function(){
+			// 				Dialog.close(this);
+			// 			},
+			// 			确定 : function(){
+			// 				Dialog.close(this);
+			// 				$.post('/api/activateaccount',{}).then(function (res){
+			// 					Dialog.init(res.msg,2000)
+			// 					console.log(res.data)
+			// 					if (res.code == 200){
+			// 						// $.post('/api/getbalance',{}).then(function (res){
+			// 						    $('.balance').text(res.data.balance);
+			// 						// })
+			// 					}
+			// 				})
+			// 			},
+			// 		}
+			// 	});
+			// })
+			$('.allreceive').click(function(){
+				alert("全部认领")
+			})
+			$('#text03').click(function(){
+				alert("认领")
+			})
+			$('#buyzs').click(function(){
+				//alert("购买钻石")
+				$(location).attr('href','/shop.html')
+			})
+			$('#zs').click(function(){
+				$(location).attr('href','/transfer.html')
+			})
+			$('#cz').click(function(){
+				Dialog.init('敬请期待',2000);
+			})
+			$('#exchange').click(function (){
+				Dialog.init('敬请期待',2000);
+			})
+			function end(id){
+				Dialog.init('本场次竞购已结束,请明天再来!',2000);
+			}
+			function yuyue(id){
+				Dialog.init('预约中!',2000);
+			}
+			function buy(id){
+				Dialog.init('竞购中!',2000);
+			}
+		</script>
+		<script>
+			$(function() {
+				$.post('/api/userinfo',{}).then(function(res){
+					    var balance = res.data.balance;
+					    var jihuo   = res.data.status;
+					    if (jihuo == 1){
+							$('.jewel02').text("已激活")
+							$('.jewel02').attr("id","yijihuo")
+						}
+					    console.log(res)
+						$('.balance').text(balance)
+
+
+				})
+				 $.post('/api/getlist',{}).then(function(res){
+
+					 console.log(res)
+					 res.data.forEach(function (e){
+                         console.log(e)
+						 // <img src="'+e.img+'" >
+						 var type;
+						 switch (e.type) {
+							 case 0:
+								 type= '<div id=\"text03\" onclick="end('+e.id+')">已结束</div>';
+								 break;
+							 case 1:
+								 type = '<div id=\"text03\" onclick="yuyue('+e.id+')">预约竞购</div>';
+								 break;
+							 case 2:
+								 type = '<div id=\"text03\" onclick="buy('+e.id+')">开始竞购</div>';
+								 break;
+							 // case 3:
+								//  type = '<div id=\"text03\" onclick="buy('+e.id+')">开始竞购</div>';
+								//  break;
+						 }
+						 if (e.status == 0){
+							 $('#list').append('<div style=\"background-image: linear-gradient(to right,'+e.left_color+', '+e.right_color+');\" class=\"chanpin swiper-slide\" id=\"kuangji\">' +
+									 ' <div class=\"content\"> <div class=\"content-left\"><div id=\"text01\">'+e.name+'</div>' +
+									 '<div id=\"text02\">预约时间：'+e.appoint_start_time+'~'+e.appoint_end_time+'</div>' +
+									 '<div id=\"text02\">竞购时间：'+e.start_time+'~'+e.end_time+'</div></div>' +
+									 '<div class=\"content-rigth\"> '+type+'' +
+									 '</div></div><div class=\"productimg\"> </div></div>')
+						 }
+					 })
+
+				 })
+			});
+		</script>
+	</body>
+</html>

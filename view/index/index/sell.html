@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我要出售</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/static/css/bar.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/all.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/box.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/dialog.css"/>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/mDialogMin.js"></script>
+</head>
+<body>
+    <div class="title">
+        <a href="javascript:history.go(-1)" style="padding-left: 8px">
+            <img src="/static/img/back.png" alt="">
+        </a>
+        <p class="title-text">我要出售</p>
+        <p></p>
+    </div>
+    <div style="height:2.5rem ">
+
+    </div>
+    <div class="box">
+        <span class="box-left">我的钻石</span>
+        <span class="box-right" id="balance">0.00</span>
+    </div>
+    <div class="middlebox">
+        <div class="boxlist">
+            <div class="boxlist-left">
+                出售数量
+            </div>
+            <div class="boxlist-right">
+                <input type="number" value="0" id="number">
+            </div>
+        </div>
+        <div class="boxlist">
+            <div class="boxlist-left">
+                单价
+            </div>
+            <div class="boxlist-right">
+                ￥<span id="price">0.00</span>
+            </div>
+        </div>
+        <div class="boxlist">
+            <div class="boxlist-left">
+                手续费
+            </div>
+            <div class="boxlist-right">
+                 <span id="interest">0.00</span>%
+            </div>
+        </div>
+        <div class="boxlist">
+            <div class="boxlist-left">
+                价值
+            </div>
+            <div class="boxlist-right">
+                ￥<span id="total">0.00</span>
+            </div>
+        </div>
+    </div>
+    <div class="tips">
+        <img src="/static/img/tips.png" alt="">
+        <span>注意:请确认账户收款信息是否正确。若因收款信息绑定错误，导致收款不成功。本平台概不负责！</span>
+    </div>
+    <div style="height:2.5rem ">
+
+    </div>
+    <div class="btn">
+        提交
+    </div>
+    <script>
+        $(function (){
+            $.post('/api/userinfo',{}).then(function(res){
+                var balance = res.data.balance;
+                $('#balance').text(balance)
+
+
+            })
+            $.post('/api/getsysteminfo',{'name':'price_setting'}).then(function(res){
+                var price    = res.data.price;
+                var interest = res.data.interest;
+                $('#price').text(price)
+                $('#interest').text(interest)
+
+            })
+        })
+        $('.btn').click(function (){
+          let number = $('#number').val();
+          let price = $('#price').text();
+          let interest = $('#interest').text();
+          let total =price*number-(price*number*interest/100);
+          //console.log(number,price,interest)
+            if (number.length == 0 ||number <= 0) {
+              Dialog.init('数量有误!',2000)
+                return false;
+          }
+          $('#total').text(total)
+          $.post('/api/selljewel',{'amount':number}).then(function (res){
+              Dialog.init(res.msg,2000)
+              if (res.code == 200){
+                  $('#balance').text(res.data.balance);
+              }
+          })
+        })
+        $('#number').bind('input propertychange', function() {
+            let number = $('#number').val();
+            let price  = $('#price').text();
+            let interest = $('#interest').text();
+            let total =price*number-(price*number*interest/100);
+            //console.log(number,price,interest)
+            if (number.length == 0 ||number <= 0){
+                $('#number').val('0');
+            }
+            $('#total').text(total.toFixed(2))
+        });
+    </script>
+</body>
+</html>

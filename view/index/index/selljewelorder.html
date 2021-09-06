@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>集市订单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    <link rel="stylesheet" type="text/css" href="/static/css/all.css"/>-->
+    <link rel="stylesheet" type="text/css" href="/static/css/bar.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/dialog.css"/>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/mDialogMin.js"></script>
+</head>
+<body>
+<div class="title">
+    <a href="javascript:history.go(-1)" style="padding-left: 8px">
+        <img src="/static/img/back.png" alt="">
+    </a>
+    <p class="title-text">我的钻石订单</p>
+    <p></p>
+</div>
+<div class="tab">
+    <div class="menu" id="tab1">
+        钻石购买
+    </div>
+    <div class="menu menu-activate" id="tab2">
+        钻石出售
+    </div>
+</div>
+<div class="tab-option">
+<!--    <span id="a1">待支付</span><span id="a2">待确认</span><span id="a3">已完成</span>-->
+    <span id="b1">挂卖中</span><span id="b2">待支付</span><span id="b3">待确认</span><span id="b4">已完成</span>
+</div>
+<div class="box" style="margin-top: 10rem">
+
+</div>
+<div class="notfound" style="display: none;text-align: center;margin: 10px">
+
+</div>
+<script>
+    $(function (e){
+        getorder(0,0,'cancel');
+    })
+    $('#tab1').click(function (e){
+        $(location).attr('href','/jewelorder.html')
+        // $('.tab-option').html('<span id=\"a1\">待支付</span><span id=\"a2\">待确认</span><span id=\"a3\">已完成</span>')
+    })
+    $('#tab2').click(function (e){
+        //$('.tab-option').html('<span id=\"b1\">挂卖中</span><span id=\"b2\">待支付</span><span id=\"b3\">待确认</span><span id=\"b4\">已完成</span>')
+    })
+    $('#b1').click(function (e){
+        $('.box').html('')
+        getorder(0,0,'cancel');
+    })
+    $('#b2').click(function (e){
+        $('.box').html('')
+        getorder(1,1,'detail');
+    })
+    $('#b3').click(function (e){
+        $('.box').html('')
+        getorder(2,1,'detail');
+    })
+    $('#b4').click(function (e){
+        $('.box').html('')
+        getorder(3,1,'detail');
+        //$('.buy').attr('id','datail')
+    })
+    function getorder(status,is_lock,type){
+        $.post('/api/userselljewelorder',{'status':status,'is_lock':is_lock}).then(function (res){
+            if (res.code == 200){
+                res.data.forEach(function (e){
+                    let data;
+                    if (type == 'cancel'){
+                        data = '<button class=\"buy\" style=\"background: #FF7E7E\"  onclick="cancel('+e.id+')" type=\"button\">取消</button>'
+                    }
+                    if (type == 'detail'){
+                        data = '<button class=\"buy\"  onclick="detail('+e.id+')" type=\"button\">查看详情</button>'
+                    }
+                    //type = 'cancel' ? '<button class=\"buy\" style=\"background: #FF7E7E\"  onclick="cancel('+e.id+')" type=\"button\">取消</button>' : '<button class=\"buy\"  onclick="detail('+e.id+')" type=\"button\">查看详情</button>';
+                    $('.notfound').css("display","none")
+                    $('.box').append('<div class=\"middlecard\"><div class=\"card\"><div class=\"card-top\"><div class=\"card-left\"><div class=\"card-img\"><img  src=\"/static/img/user.png\" ></div><div class=\"card-title\"><div class=\"\">订单号: </div><div class=\"\">出售数量: </div><div class=\"\">单价: </div><div class=\"\">价值: </div></div></div><div class=\"card-right\"><div class=\"\">'+e.order_id+'</div> <div class=\"\">'+e.amount+'</div> <div class=\"\">￥<span>'+e.price+'</span></div><div class=\"\">￥<span>'+(e.price*e.amount).toFixed(2)+'</span> </div> </div></div><div class=\"card-bottom\"> <div class=\"\">应付金额:</div><div class=\"\" style=\"color: #e27c28;font-size: 15px;\">￥<span>'+(e.price*e.amount).toFixed(2)+'</span></div>'+data+'</div></div></div>')
+                    // $('.middlecard').html('111')
+                })
+
+            }else{
+                $('.notfound').css("display","block")
+                $('.notfound').html('<img style=\"height: 150px\" src=\"/static/img/notfound.png\"><p>暂无数据~</p>')
+            }
+        })
+    }
+    function cancel(id){
+        console.log(id)
+    }
+    function detail(id){
+        console.log(id)
+    }
+</script>
+</body>
+</html>

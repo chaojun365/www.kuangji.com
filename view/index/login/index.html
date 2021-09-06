@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <title>登录</title>
+    <link href="login/css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/static/css/dialog.css"/>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/mDialogMin.js"></script>
+    <style type="text/css">
+        .login-content{
+            position: absolute;
+            top: 30%;
+            width: 90%;
+            left: 50%;
+            margin-left: -45%;
+            border-radius: 10px;
+            padding: 0 25px;
+            background-color: #fff;
+        }
+        .ui-page-login,  body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .ui-page-login{
+            background-image: url("login/images/login-bg.jpg");
+            background-size: 100% 100%;
+        }
+        .login-content{
+            position: absolute;
+            top: 30%;
+            width: 90%;
+            left: 50%;
+            margin-left: -45%;
+            border-radius: 10px;
+            padding: 0 25px;
+            background-color: #fff;
+        }
+        .login-logo{
+            text-align: center;
+            margin-top: -37px;
+        }
+        .login-logo img{
+            border: 1px solid #fb4746;
+            border-radius: 50%;
+        }
+        .ipttxt-row{
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .ipttxt-row label{
+            width: 20%;
+        }
+        .ipttxt-row .mui-input{
+            width: 80%;
+            border: 1px solid #fb4746;
+            border-radius: 30px;
+            margin-bottom: 0;
+            background-color: transparent;
+        }
+        .ipttxt-row .mui-input::placeholder{ font-size: 14px;}
+        .link-area{
+            margin-top: 12px;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+        .link-area a{
+            color: #fb4746;
+            font-size: 14px;
+        }
+        .mui-btn-login{
+            padding: 10px 0;
+            background-color: #ff7776;
+            border: 1px solid #fb4746;
+            border-radius: 30px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="ui-page-login">
+    <header class="mui-bar mui-bar-transparent">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    </header>
+    <div class="login-content">
+        <div class="login-logo"><img src="login/images/default.gif"/></div>
+        <form id="login-form">
+            <div class="ipttxt-row">
+                <label><img src="login/images/accout.png"/></label>
+                <input id="mobile" type="text" class="mui-input" placeholder="账号"/>
+            </div>
+            <div class="ipttxt-row">
+                <label><img src="login/images/password.png"/></label>
+                <input id="password" type="password" class="mui-input" placeholder="密码"/>
+            </div>
+            <div class="ipttxt-row" style="position: relative;">
+                <label><img src="login/images/code.png"/></label>
+                <input id="code" type="text" class="mui-input" placeholder="验证码"/>
+                <img style="height: 2.2rem;width: 6rem;position:absolute;right: 0.2rem;top:0.1rem;border-radius: 2rem" id="vcode" src="{:captcha_src()}" alt="captcha" />
+            </div>
+            <div class="link-area">
+                <a href="forget_password.html">忘记密码?</a>
+            </div>
+        </form>
+        <div class="">
+            <button type="button" id="login" class="mui-btn mui-btn-block mui-btn-login">登 录</button>
+        </div>
+    </div>
+    <script>
+        //点击更新图形验证码
+        $('#vcode').click(function() {
+            let src = $(this).attr('src')+'?vt='+Math.random();
+            $(this).attr('src',src);
+        })
+        $('#login').click(function (){
+            let mobile = $('#mobile').val()
+            let password = $('#password').val()
+            let code     = $('#code').val()
+            var myreg=/^1[3-9]\d{9}$/;
+            if (!myreg.test(mobile)){
+                Dialog.init('手机号码格式不正确!',2000)
+                return false;
+            }
+            if (password.length < 6){
+                Dialog.init('密码至少6位!',2000)
+                return false;
+            }
+            if (code.length !== 4){
+                Dialog.init('验证码4位!',2000)
+                return false;
+            }
+            $.post('/api/login',{'mobile':mobile,'password':password,'code':code}).then(function (res){
+               // console.log(res)
+
+                if (res.code == 200){
+                    $(location).attr('href','/index.html')
+                }else{
+                    Dialog.init(res.msg,2000)
+                }
+            })
+        })
+    </script>
+</body>
+</html>

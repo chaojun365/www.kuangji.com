@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>集市</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="/static/css/bar.css"/>
+		<link rel="stylesheet" type="text/css" href="/static/css/dialog.css"/>
+		<script src="/static/js/jquery.js"></script>
+		<script src="/static/js/mDialogMin.js"></script>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;	
+			}
+
+			.all {
+				position:relative;
+				padding: 10px 1rem;
+				margin-top: 120px;
+				margin-bottom: 80px;
+			}
+		    .top{
+				height: 8rem;
+				width: calc(100% - (1rem *2));
+				top: 0;
+				background-color: #FFFFFF;
+				//border: #41C673 2px solid;
+				position:fixed;
+				/* position: absolute; */
+				border-bottom: #d8d8d8 1px solid;
+				z-index: 999;
+				
+			}
+			.topdiv01{
+				//border: #aaff00 2px solid;
+				text-align: center;
+				height: 50%;
+				/* width: 100%; */
+				/* position:fixed; */
+				z-index: 999;
+				display: flex;
+				color: #ffffff;
+			}
+			.topdiv01-left{
+				line-height: 4rem;
+				border: #fff 3px solid;
+				width: 50%;
+				//margin: 0.5rem;
+				border-radius:0 15px ;
+				//background-color:#41C673;
+				background-image: linear-gradient(to right,#41C673, #50ffcb);
+			}
+			.topdiv01-right{
+				line-height: 4rem;
+				border: #fff 3px solid;
+				width: 50%;
+				border-radius:0 15px ;
+				//background-color: #de946e;
+				background-image: linear-gradient(to right,#de946e, #ffaa00);
+			}
+			.topdiv02{
+				//height: 50%;
+	            //border: #41C673 2px solid;
+				display: flex;
+				/* position:fixed; */
+				line-height: 4rem;
+			}
+			.topdiv02-left{
+				//height: 1.875rem;
+				width: 80%;
+			}
+			.topdiv02-left>input{
+				height: 1.5rem;
+				width: 85%;
+				border: #d5dadf 0.125rem solid;
+				border-radius: 1.25rem;
+			}
+			.topdiv02-right{
+				//height: 1.875rem;
+				width:20%;
+
+			}
+			.topdiv02-right>button{
+				height: 1.875rem;
+				width: 100%;
+				border: #d5dadf 0.125rem solid;
+				border-radius: 1.25rem;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="all">
+			<div class="top">
+				<div class="topdiv01">
+					<div class="topdiv01-left" id="jewelorder">
+						我的集市订单
+					</div>
+					<div class="topdiv01-right" id="shell">
+						出售钻石
+					</div>
+				</div>
+				<div class="topdiv02">
+					<div class="topdiv02-left">
+						<input type="" name="" id="" placeholder="请输入订单号" value="" />
+					</div>
+					<div class="topdiv02-right">
+						<button type="button" >搜索</button>
+					</div>
+				</div>	
+			</div>
+			<div class="box">
+
+			</div>
+			<div class="notfound" style="display: none;text-align: center;margin: 10px">
+
+			</div>
+		</div>
+		<div class="bar">
+			<div class="barlist">
+				<a href="./index.html">
+				    <img src="/static/img/shouye.png" >
+				</a>
+				<div class="">
+					首页
+				</div>
+			</div>	
+			<div class="barlist">
+				<a href="./shop.html">
+				    <img src="/static/img/jishi.png" >
+				</a>
+				<div class="">
+					集市
+				</div>
+			</div>	
+			<div class="barlist">
+				<a href="./cangku.html">
+				    <img src="/static/img/cangku.png" >
+				</a>
+				<div class="">
+					仓库
+				</div>
+			</div>	
+			<div class="barlist">
+				<a href="./my.html">
+				    <img src="/static/img/wode.png" >
+				</a>
+				<div class="">
+					我的
+				</div>
+			</div>	
+		</div>
+	    <script>
+			$(function (){
+				$.post('/api/getjewelorder',{'status':0,'is_lock':0}).then(function (res){
+					if (res.code == 200){
+						res.data.forEach(function (e){
+							$('.box').append('<div class=\"middlecard\"><div class=\"card\">' +
+									'<div class=\"card-top\"><div class=\"card-left\">' +
+									'<div class=\"card-img\"><img  src=\"/static/img/user.png\" ></div>' +
+									'<div class=\"card-title\"><div class=\"\">订单号: </div><div class=\"\">出售数量: </div>' +
+									'<div class=\"\">单价: </div><div class=\"\">价值: </div></div></div><div class=\"card-right\">' +
+									'<div class=\"\">'+e.order_id+'</div> <div class=\"\">'+e.amount+'</div> ' +
+									'<div class=\"\">￥<span>'+e.price+'</span></div>' +
+									'<div class=\"\">￥<span>'+(e.price*e.amount).toFixed(2)+'</span> </div> </div></div>' +
+									'<div class=\"card-bottom\"> <div class=\"\">应付金额:</div>' +
+									'<div class=\"\" style=\"color: #e27c28;font-size: 15px;\">￥<span>'+(e.price*e.amount).toFixed(2)+'</span></div>' +
+									'<button class=\"buy\" onclick="buy('+e.id+')" type=\"button\">购买</button></div></div></div>')
+							// $('.middlecard').html('111')
+						})
+
+					}else{
+						   $('.notfound').css("display","block")
+						   $('.notfound').html('<img style=\"height: 150px\" src=\"/static/img/notfound.png\"><p>暂无数据~</p>')
+					}
+				})
+			});
+			function buy(id){
+				Dialog.init('确定后不能主动取消订单，请按应付金额付款给卖家,超时未付将冻结账号',{
+					title : '购买钻石',
+					button : {
+						取消 : function(){
+							Dialog.close(this);
+						},
+						确定 : function(){
+							Dialog.close(this);
+							$.post('/api/buyjewel',{'order_id':id}).then(function (res){
+								//console.log(res.data)
+								if (res.code == 200){
+									Dialog.init(res.msg,2000)
+									//跳转到订单支付页面
+									setTimeout(function () {
+										$(location).attr('href','/jewelorder.html')
+									},3000);
+									//$(location).attr('href','/payment.html')
+								}else{
+									Dialog.init(res.msg,2000)
+								}
+							})
+						},
+					}
+				});
+			}
+			$('#shell').click(function (){
+				$(location).attr('href','/sell.html')
+			})
+			$('#jewelorder').click(function (){
+				$(location).attr('href','/jewelorder.html')
+			})
+		</script>
+	</body>
+</html>

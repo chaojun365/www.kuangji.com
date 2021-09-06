@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设置</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/static/css/all.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/bar.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/dialog.css"/>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/mDialogMin.js"></script>
+    <style>
+        .btn{
+            background: #ff7e7e;
+            border-radius: 2rem;
+            color: #FFFFFF;
+            font-size: 1.1rem;
+            text-align: center;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="title">
+    <a href="javascript:history.go(-1)" style="padding-left: 8px">
+        <img src="/static/img/back.png" alt="">
+    </a>
+    <p class="title-text">设置</p>
+    <p></p>
+</div>
+<div class="all">
+    <div class="service">
+        <div class="servicelist">
+            <div class="servicelist_left">
+<!--                <img src="/static/img/gg.png" class="img1">-->
+                <p class="servicelist_text">修改昵称</p>
+            </div>
+            <img src="/static/img/jr.png" class="img2">
+        </div>
+        <div class="servicelist">
+            <div class="servicelist_left">
+<!--                <img src="/static/img/zfgl.png" class="img1">-->
+                <p class="servicelist_text">登录密码</p>
+            </div>
+            <img src="/static/img/jr.png" class="img2">
+        </div>
+        <div class="servicelist">
+            <div class="servicelist_left">
+<!--                <img src="/static/img/wdfx.png" class="img1">-->
+                <p class="servicelist_text">支付密码</p>
+            </div>
+            <img src="/static/img/jr.png" class="img2">
+        </div>
+<!--        <div class="servicelist">-->
+<!--            <div class="servicelist_left">-->
+<!--&lt;!&ndash;                <img src="/static/img/yqwm.png" class="img1">&ndash;&gt;-->
+<!--                <p class="servicelist_text">当前版本</p>-->
+<!--            </div>-->
+<!--            <img src="/static/img/jr.png" class="img2">-->
+<!--        </div>-->
+    </div>
+</div>
+<div style="height:2.5rem ">
+
+</div>
+<div class="btn">
+    退出登录
+</div>
+<script>
+    $('.btn').click(function (){
+        $.post('/api/signout',{}).then(function (res){
+            Dialog.init(res.msg,2000)
+            if (res.code == 200){
+
+                setTimeout(function () {
+                    $(location).attr('href','/login.html')
+                },3000);
+            }
+        })
+    })
+</script>
+</body>
+</html>

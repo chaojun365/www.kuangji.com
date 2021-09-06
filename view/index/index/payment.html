@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>支付管理</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/all.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/bar.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/box.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/dialog.css"/>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/mDialogMin.js"></script>
+</head>
+<body>
+<div class="title">
+    <a href="javascript:history.go(-1)" style="padding-left: 8px">
+        <img src="/static/img/back.png" alt="">
+    </a>
+    <p class="title-text">支付管理</p>
+    <p></p>
+</div>
+<div class="notfound" style="display: none;text-align: center;margin: 5rem">
+
+</div>
+<script>
+    $(function (){
+        $('.notfound').css("display","block")
+        $('.notfound').html('<img style=\"height: 150px\" src=\"/static/img/notfound.png\"><p>暂无数据~</p>')
+    })
+</script>
+</body>
+</html>
